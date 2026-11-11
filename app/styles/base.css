@@ -1,0 +1,218 @@
+/* ============================================================
+   WareSafe — base layer
+   Reset, document defaults, typography primitives and the
+   platform behaviours (safe areas, overscroll, haptics,
+   reduced motion). Everything else composes from here.
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* An author display value on an element would otherwise defeat the
+   UA rule for [hidden], leaving collapsed panels visible. */
+[hidden] {
+  display: none !important;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--surface-grouped);
+  color: var(--text-primary);
+  font: var(--text-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior-y: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* The app shell owns scrolling, not the document. This keeps the
+   iOS rubber-band overscroll off the body chrome. */
+body.is-locked {
+  overflow: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+ul[role="list"],
+ol[role="list"] {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+img,
+svg,
+picture {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+a {
+  color: var(--brand-navy-700);
+  text-decoration: none;
+}
+
+/* ---- Typography primitives -------------------------------- */
+
+.t-largeTitle {
+  font: var(--text-largeTitle);
+  letter-spacing: -0.02em;
+}
+.t-title1 {
+  font: var(--text-title1);
+  letter-spacing: -0.015em;
+}
+.t-title2 {
+  font: var(--text-title2);
+  letter-spacing: -0.01em;
+}
+.t-title3 {
+  font: var(--text-title3);
+}
+.t-headline {
+  font: var(--text-headline);
+}
+.t-body {
+  font: var(--text-body);
+}
+.t-callout {
+  font: var(--text-callout);
+}
+.t-subheadline {
+  font: var(--text-subheadline);
+  color: var(--text-secondary);
+}
+.t-footnote {
+  font: var(--text-footnote);
+  color: var(--text-secondary);
+}
+.t-caption1 {
+  font: var(--text-caption1);
+  color: var(--text-tertiary);
+}
+.t-caption2 {
+  font: var(--text-caption2);
+  letter-spacing: var(--tracking-tab);
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.t-secondary {
+  color: var(--text-secondary);
+}
+.t-tertiary {
+  color: var(--text-tertiary);
+}
+.t-truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.t-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.t-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---- Screen reader only ----------------------------------- */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- Focus ------------------------------------------------ */
+
+:focus-visible {
+  outline: 3px solid var(--brand-turquoise);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ---- Scrollbars ------------------------------------------- */
+
+.scroll-y {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* ---- Reduced motion --------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- Forced colours (Windows high contrast) --------------- */
+
+@media (forced-colors: active) {
+  .card,
+  .list-group,
+  .verdict {
+    border: 1px solid CanvasText;
+  }
+  .outcome-badge {
+    border: 1px solid CanvasText;
+  }
+}

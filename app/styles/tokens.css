@@ -1,0 +1,199 @@
+/* ============================================================
+   WareSafe design tokens
+   Single source of truth for colour, type, spacing, radius,
+   elevation and motion. Nothing below this file uses a raw
+   hex value or an ad-hoc measurement.
+   ============================================================ */
+
+:root {
+  /* ---- Brand palette ---------------------------------------- */
+  --brand-navy: #010066;
+  --brand-navy-700: #1a1a80;
+  --brand-navy-900: #000044;
+
+  --brand-turquoise: #02e3bb;
+  --brand-turquoise-soft: #52efd3;
+  --brand-turquoise-pale: #84f4e1;
+
+  --brand-green: #7fde44;
+  --brand-green-soft: #aae683;
+  --brand-green-pale: #99e36d;
+
+  --brand-pink: #f70566;
+  --brand-pink-soft: #f75b9c;
+  --brand-pink-pale: #f96da7;
+  --brand-pink-lightest: #faa6ca;
+
+  --brand-orange: #fcbf61;
+  --brand-orange-soft: #fbd598;
+  --brand-orange-pale: #fbe5c1;
+
+  --brand-cyan: #10ccbe;
+  --brand-cyan-soft: #60d6cf;
+  --brand-cyan-pale: #78dad2;
+  --brand-cyan-lightest: #97e2dc;
+
+  /* ---- Neutrals --------------------------------------------- */
+  --text-primary: #0e0e2e;
+  --text-secondary: #4a4a63;
+  --text-tertiary: #78788f;
+  --text-on-navy: #ffffff;
+  --text-on-accent: #010066;
+
+  --surface-base: #ffffff;
+  --surface-grouped: #f3f3f8;
+  --surface-sunken: #eaeaf2;
+  --surface-raised: #ffffff;
+
+  --separator: rgba(16, 16, 48, 0.1);
+  --separator-strong: rgba(16, 16, 48, 0.16);
+  --fill-subtle: rgba(118, 118, 128, 0.12);
+
+  /* ---- Semantic outcomes ------------------------------------ */
+  --outcome-compatible: var(--brand-green);
+  --outcome-compatible-wash: #e9f9dc;
+  --outcome-compatible-text: #1f5c0a;
+
+  --outcome-incompatible: var(--brand-pink);
+  --outcome-incompatible-wash: #fde6ef;
+  --outcome-incompatible-text: #a3003f;
+
+  --outcome-conditional: var(--brand-orange);
+  --outcome-conditional-wash: #fdf2df;
+  --outcome-conditional-text: #7a4a00;
+
+  --outcome-review: #5a5a72;
+  --outcome-review-wash: #ededf4;
+  --outcome-review-text: #3a3a52;
+
+  --outcome-none: var(--text-tertiary);
+  --outcome-none-wash: var(--surface-grouped);
+  --outcome-none-text: var(--text-secondary);
+
+  /* Solid fills for the verdict card and the store bands. The ink
+     values clear 4.5:1 on their own fill. */
+  --outcome-compatible-fill: #7fde44;
+  --outcome-compatible-head: #6ccb32;
+  --outcome-compatible-ink: #1f5c0a;
+  --outcome-conditional-fill: #fcbf61;
+  --outcome-conditional-head: #f2a93f;
+  --outcome-conditional-ink: #3d2400;
+  --outcome-incompatible-fill: #d6003c;
+  --outcome-incompatible-head: #b80033;
+  --outcome-incompatible-ink: #ffffff;
+  --outcome-review-fill: #ededf4;
+  --outcome-review-head: #e0e0ea;
+  --outcome-review-ink: #3a3a52;
+  --outcome-none-fill: #f3f3f8;
+  --outcome-none-ink: #4a4a63;
+
+  /* ---- Emergency -------------------------------------------- */
+  --emergency: #d6003c;
+  --emergency-soft: #fde6ef;
+  --emergency-text: #8e0030;
+
+  /* ---- Typography ------------------------------------------- */
+  --font-bangla: "Noto Sans Bengali", "Bangla Sangam MN", "SolaimanLipi",
+    "Hind Siliguri";
+  --font-latin: "Montserrat Variable", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", system-ui, sans-serif;
+  /* Latin first, then Bangla. The browser picks a family per character, so
+     Latin renders in Montserrat and Bangla falls through to the self-hosted
+     Noto Sans Bengali. Noto carries no Latin in the bundled subset, so the
+     two never fight over a letter. */
+  --font-stack: "Montserrat Variable", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", system-ui, var(--font-bangla), sans-serif;
+
+  --text-largeTitle: 700 34px/1.22 var(--font-stack);
+  --text-title1: 600 28px/1.21 var(--font-stack);
+  --text-title2: 600 22px/1.27 var(--font-stack);
+  --text-title3: 600 20px/1.25 var(--font-stack);
+  --text-headline: 600 17px/1.3 var(--font-stack);
+  --text-body: 400 17px/1.55 var(--font-stack);
+  --text-callout: 400 16px/1.5 var(--font-stack);
+  --text-subheadline: 400 15px/1.5 var(--font-stack);
+  --text-footnote: 400 13px/1.5 var(--font-stack);
+  --text-caption1: 500 12px/1.4 var(--font-stack);
+  --text-caption2: 600 11px/1.3 var(--font-stack);
+
+  --tracking-tab: 0.04em;
+
+  /* ---- Spacing ---------------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 48px;
+
+  --gutter: 16px;
+  --card-padding: 16px;
+
+  /* ---- Radius ----------------------------------------------- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-sheet: 28px;
+  --radius-full: 999px;
+
+  /* ---- Elevation -------------------------------------------- */
+  --elevation-0: none;
+  --elevation-1: 0 1px 2px rgba(1, 0, 102, 0.05), 0 4px 12px rgba(1, 0, 102, 0.05);
+  --elevation-2: 0 2px 6px rgba(1, 0, 102, 0.06), 0 12px 28px rgba(1, 0, 102, 0.08);
+  --elevation-sheet: 0 -8px 40px rgba(1, 0, 102, 0.18);
+
+  /* ---- Motion ----------------------------------------------- */
+  --motion-fast: 150ms;
+  --motion-standard: 250ms;
+  --motion-sheet: 400ms;
+  --motion-collapse: 300ms;
+  --ease-standard: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ---- Layout ----------------------------------------------- */
+  --content-max: 560px;
+  --tabbar-height: 52px;
+  --hit-target: 44px;
+}
+
+/* Outcome theming: one class on a container drives every descendant,
+   so a verdict can never mix two palettes. */
+.t-compatible {
+  --outcome: var(--outcome-compatible);
+  --outcome-wash: var(--outcome-compatible-wash);
+  --outcome-text: var(--outcome-compatible-text);
+  --outcome-fill: var(--outcome-compatible-fill);
+  --outcome-ink: var(--outcome-compatible-ink);
+}
+.t-incompatible {
+  --outcome: var(--outcome-incompatible);
+  --outcome-wash: var(--outcome-incompatible-wash);
+  --outcome-text: var(--outcome-incompatible-text);
+  --outcome-fill: var(--outcome-incompatible-fill);
+  --outcome-ink: var(--outcome-incompatible-ink);
+}
+.t-conditional {
+  --outcome: var(--outcome-conditional);
+  --outcome-wash: var(--outcome-conditional-wash);
+  --outcome-text: var(--outcome-conditional-text);
+  --outcome-fill: var(--outcome-conditional-fill);
+  --outcome-ink: var(--outcome-conditional-ink);
+}
+.t-review_required {
+  --outcome: var(--outcome-review);
+  --outcome-wash: var(--outcome-review-wash);
+  --outcome-text: var(--outcome-review-text);
+  --outcome-fill: var(--outcome-review-fill);
+  --outcome-ink: var(--outcome-review-ink);
+}
+.t-none {
+  --outcome: var(--outcome-none);
+  --outcome-wash: var(--outcome-none-wash);
+  --outcome-text: var(--outcome-none-text);
+  --outcome-fill: var(--outcome-none-fill);
+  --outcome-ink: var(--outcome-none-ink);
+}

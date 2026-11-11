@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-labelledby="icon-title">
+  <title id="icon-title">WareSafe icon</title>
+  <desc>Simple shield-like icon for WareSafe app</desc>
+  <path d="M50 10 L90 30 V60 C90 80 70 95 50 95 C30 95 10 80 10 60 V30 Z" fill="#010066"/>
+  <path d="M50 30 L65 55 H35 Z" fill="#02E3BB"/>
+</svg>

@@ -1,0 +1,933 @@
+/* ============================================================
+   WareSafe — components
+   The reusable pieces. Each one is a pure presentation layer:
+   it never decides a verdict, never fetches, never stores.
+   ============================================================ */
+
+/* ---- App shell -------------------------------------------- */
+
+.app {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-grouped);
+}
+
+/* The app body is the scroll owner, so the tab bar stays put and
+   the large title scrolls under the glass bar as on iOS. */
+.app__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  padding-bottom: calc(var(--tabbar-height) + env(safe-area-inset-bottom));
+}
+
+/* ---- Screen bar (brand chrome) -------------------------------
+   The navy bar is the brand surface of the app: the Syngenta
+   wordmark on the left, the language slider on the right, and
+   nothing else. The screen name lives in the large title or the
+   product header directly beneath it, so a title in the bar would
+   only repeat what is already on screen.
+
+   The content below the bar stays light, so the hazard colours and
+   the emergency red keep their contrast.                        */
+
+.screen__bar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  padding-top: calc(var(--space-2) + env(safe-area-inset-top));
+  /* Two declarations on purpose: the plain rgba for browsers
+     without color-mix, the token-based one for those that have it. */
+  background: rgba(1, 0, 102, 0.86);
+  background: color-mix(in srgb, var(--brand-navy) 86%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  color: var(--text-on-navy);
+}
+
+/* The wordmark. Never stretched, never recoloured. */
+.screen__bar-logo {
+  flex: none;
+  height: 18px;
+  width: auto;
+  margin-right: auto;
+}
+
+/* An icon button. On the navy bar it is white; on a white card it
+   is the brand navy. */
+.bar__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: var(--radius-full);
+  color: var(--brand-navy);
+  font: var(--text-headline);
+}
+
+.bar__action:active {
+  background: var(--fill-subtle);
+}
+
+.screen__bar .bar__action {
+  color: var(--text-on-navy);
+}
+
+.screen__bar .bar__action:active {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+/* ---- Language pill ------------------------------------------
+   A two-option segmented control. Both choices are visible at all
+   times and the active one is filled, so the control reads as "what
+   language the screen is in" without a second tap.              */
+
+.langpill {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.langpill__option {
+  min-height: 26px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-full);
+  font: var(--text-caption2);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tab);
+  color: rgba(255, 255, 255, 0.78);
+  transition: background var(--motion-fast) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard);
+}
+
+.langpill__option[aria-pressed="true"] {
+  background: var(--surface-base);
+  color: var(--brand-navy);
+}
+
+/* ---- Large title ------------------------------------------ */
+
+.largetitle {
+  padding: var(--space-2) var(--gutter) var(--space-4);
+  background: var(--surface-base);
+}
+
+.largetitle__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.largetitle__title {
+  font: var(--text-largeTitle);
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.largetitle__site {
+  flex: none;
+  max-width: 45%;
+  padding: var(--space-1) var(--space-3);
+  background: var(--surface-sunken);
+  border-radius: var(--radius-full);
+  text-align: right;
+}
+
+.largetitle__site .bilingual__bn {
+  font: var(--text-caption1);
+  color: var(--text-secondary);
+}
+
+.largetitle__site .bilingual__en {
+  font: var(--text-caption2);
+  color: var(--text-tertiary);
+}
+
+/* ---- Sections & cards ------------------------------------- */
+
+.card {
+  margin: 0 var(--gutter);
+  padding: var(--card-padding);
+  background: var(--surface-raised);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--separator);
+}
+
+.card--flat {
+  box-shadow: none;
+  border: 1px solid var(--separator);
+}
+
+.card--wash {
+  background: var(--outcome-wash, var(--surface-grouped));
+}
+
+.card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+/* ---- List group (iOS inset grouped list) ------------------ */
+
+.list-group {
+  margin: 0 var(--gutter);
+  background: var(--surface-raised);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--separator);
+  overflow: hidden;
+}
+
+.list-group__header {
+  padding: var(--space-4) var(--card-padding) var(--space-2);
+  background: var(--surface-grouped);
+  font: var(--text-subheadline);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-tab);
+}
+
+.list-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--hit-target);
+  padding: var(--space-3) var(--card-padding);
+  text-align: left;
+  background: var(--surface-raised);
+}
+
+.list-row + .list-row {
+  border-top: 1px solid var(--separator);
+}
+
+.list-row:active {
+  background: var(--fill-subtle);
+}
+
+.list-row__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.list-row__label {
+  font: var(--text-body);
+  color: var(--text-primary);
+}
+
+.list-row__value {
+  font: var(--text-body);
+  color: var(--text-secondary);
+  max-width: 45%;
+  text-align: right;
+}
+
+/* ---- Buttons ----------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--hit-target);
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-full);
+  font: var(--text-headline);
+  transition: transform var(--motion-fast) var(--ease-standard),
+    background var(--motion-fast) var(--ease-standard);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn--primary {
+  background: var(--brand-navy);
+  color: var(--text-on-navy);
+}
+
+.btn--accent {
+  background: var(--brand-turquoise);
+  color: var(--text-on-accent);
+}
+
+.btn--danger {
+  background: var(--emergency);
+  color: #fff;
+}
+
+.btn--secondary {
+  background: var(--fill-subtle);
+  color: var(--brand-navy);
+}
+
+.btn--plain {
+  padding: 0;
+  color: var(--brand-navy);
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn[disabled] {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ---- Search field ------------------------------------------ */
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 var(--gutter) var(--space-3);
+  padding: 0 var(--space-3);
+  height: var(--hit-target);
+  background: var(--surface-sunken);
+  border-radius: var(--radius-md);
+}
+
+.search__icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: var(--text-tertiary);
+}
+
+.search__input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: none;
+  font: var(--text-body);
+  outline: none;
+}
+
+.search__input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.search__clear {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: var(--fill-subtle);
+  color: var(--text-secondary);
+}
+
+/* ---- Quick product finder ----------------------------------- */
+
+/* The emergency entry point: a search field, a short list of matches
+   and one button for the full catalogue. */
+.quickfind {
+  margin-bottom: var(--space-4);
+}
+
+.quickfind .search {
+  margin-bottom: var(--space-2);
+}
+
+.quickfind__results {
+  margin: 0 var(--gutter) var(--space-3);
+  background: var(--surface-raised);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.quickfind__hint {
+  padding: var(--space-4) var(--space-3);
+  text-align: center;
+  font: var(--text-footnote);
+  color: var(--text-secondary);
+}
+
+.quickfind .btn--block {
+  margin: 0 var(--gutter);
+  width: calc(100% - var(--gutter) * 2);
+}
+
+/* ---- Segmented control ------------------------------------- */
+
+.segmented {
+  display: flex;
+  gap: 2px;
+  margin: 0 var(--gutter) var(--space-4);
+  padding: 2px;
+  background: var(--surface-sunken);
+  border-radius: var(--radius-md);
+}
+
+.segmented__option {
+  flex: 1;
+  min-height: 34px;
+  padding: 0 var(--space-2);
+  border-radius: calc(var(--radius-md) - 2px);
+  font: var(--text-subheadline);
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: background var(--motion-fast) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard);
+}
+
+.segmented__option[aria-selected="true"] {
+  background: var(--surface-raised);
+  color: var(--text-primary);
+  box-shadow: var(--elevation-1);
+}
+
+/* ---- Tab bar ----------------------------------------------- */
+
+.tabbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  height: calc(var(--tabbar-height) + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  background: rgba(1, 0, 102, 0.92);
+  background: color-mix(in srgb, var(--brand-navy) 92%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.tabbar__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  color: rgba(255, 255, 255, 0.62);
+  font: var(--text-caption2);
+  letter-spacing: var(--tracking-tab);
+  transition: color var(--motion-fast) var(--ease-standard);
+}
+
+.tabbar__item[aria-current="page"] {
+  color: var(--brand-turquoise);
+}
+
+.tabbar__icon {
+  width: 26px;
+  height: 26px;
+  transition: transform var(--motion-standard) var(--ease-spring);
+}
+
+/* The active tab's icon lifts and grows slightly so the change of screen
+   reads as one connected motion rather than a hard cut. */
+.tabbar__item[aria-current="page"] .tabbar__icon {
+  transform: translateY(-1px) scale(1.12);
+}
+
+/* ---- GHS pictogram diamond --------------------------------- */
+
+.pictogram {
+  flex: none;
+  width: var(--pictogram-size, 44px);
+  height: var(--pictogram-size, 44px);
+}
+
+.pictogram--sm {
+  --pictogram-size: 32px;
+}
+.pictogram--lg {
+  --pictogram-size: 64px;
+}
+
+/* A code that is not one of the nine known pictograms. It holds the space
+   the diamond would have taken, so nothing around it moves. */
+.pictogram--empty {
+  background: var(--fill-subtle);
+  border-radius: var(--radius-sm);
+}
+
+/* ---- Signal word badge ------------------------------------- */
+
+.signal {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 3px var(--space-2);
+  border-radius: var(--radius-sm);
+  font: var(--text-caption1);
+  font-weight: 700;
+  background: var(--fill-subtle);
+  color: var(--text-secondary);
+}
+
+.signal--danger {
+  background: var(--outcome-incompatible-wash);
+  color: var(--outcome-incompatible-text);
+}
+
+.signal--warning {
+  background: var(--outcome-conditional-wash);
+  color: var(--outcome-conditional-text);
+}
+
+/* ---- Outcome badge ----------------------------------------- */
+
+.outcome-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--outcome-wash);
+  color: var(--outcome-text);
+  font: var(--text-headline);
+}
+
+.outcome-badge__dot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: var(--outcome);
+}
+
+/* ---- Verdict card ------------------------------------------
+   The single most important component in the app.           */
+
+.verdict {
+  margin: 0 var(--gutter);
+  padding: var(--card-padding);
+  border-radius: var(--radius-lg);
+  background: var(--outcome-fill, var(--outcome-wash));
+  color: var(--outcome-ink, var(--outcome-text));
+  box-shadow: var(--elevation-1);
+  border-left: 6px solid rgba(0, 0, 0, 0.18);
+}
+
+.verdict__headline {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.verdict__icon {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  color: var(--outcome-ink, var(--outcome-text));
+}
+
+.verdict__title {
+  font: var(--text-title2);
+  color: var(--outcome-ink, var(--outcome-text));
+}
+
+.verdict__subtitle {
+  font: var(--text-subheadline);
+  color: var(--outcome-ink, var(--outcome-text));
+}
+
+.verdict__body {
+  margin-top: var(--space-3);
+  font: var(--text-body);
+  color: var(--outcome-ink, var(--outcome-text));
+}
+
+.verdict__detail {
+  margin-top: var(--space-2);
+  font: var(--text-headline);
+  font-weight: 700;
+  color: var(--outcome-ink, var(--outcome-text));
+}
+
+.verdict__rule {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  font: var(--text-footnote);
+  color: var(--outcome-ink, var(--outcome-text));
+}
+
+/* ---- Why-this-result list ---------------------------------- */
+
+.reasons {
+  margin-top: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.reason {
+  display: flex;
+  gap: var(--space-2);
+  font: var(--text-callout);
+  color: var(--outcome-text);
+}
+
+.reason__marker {
+  flex: none;
+  margin-top: 2px;
+  opacity: 0.7;
+}
+
+/* ---- Condition callout ------------------------------------- */
+
+.condition {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+}
+
+.condition__icon {
+  flex: none;
+  color: var(--outcome);
+}
+
+.condition__text {
+  font: var(--text-callout);
+  color: var(--text-primary);
+}
+
+/* ---- Emergency banner --------------------------------------
+   Used on the Response screen only. Never decorative.      */
+
+.emergency {
+  margin: 0 var(--gutter) var(--space-4);
+  padding: var(--card-padding);
+  border-radius: var(--radius-lg);
+  background: var(--emergency-soft);
+  color: var(--emergency-text);
+  border-left: 6px solid var(--emergency);
+}
+
+.emergency__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font: var(--text-headline);
+}
+
+.emergency__body {
+  margin-top: var(--space-2);
+  font: var(--text-callout);
+}
+
+/* ---- Status strip ------------------------------------------
+   Offline / stale-data indicator. Sits under the glass bar
+   and is never a floating toast.                          */
+
+.statusstrip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--gutter);
+  background: var(--surface-sunken);
+  color: var(--text-secondary);
+  font: var(--text-footnote);
+}
+
+.statusstrip--warn {
+  background: var(--outcome-conditional-wash);
+  color: var(--outcome-conditional-text);
+}
+
+/* ---- Product row (search results) -------------------------- */
+
+.product {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--card-padding);
+  text-align: left;
+  background: var(--surface-raised);
+}
+
+.product + .product {
+  border-top: 1px solid var(--separator);
+}
+
+.product:active {
+  background: var(--fill-subtle);
+}
+
+.product__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.product__name {
+  font: var(--text-headline);
+}
+
+.product__flags {
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+  margin-top: var(--space-1);
+}
+
+/* ---- Chip --------------------------------------------------- */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-full);
+  background: var(--fill-subtle);
+  color: var(--text-secondary);
+  font: var(--text-caption1);
+  font-weight: 600;
+}
+
+.chip--warn {
+  background: var(--outcome-conditional-wash);
+  color: var(--outcome-conditional-text);
+}
+
+.chip--danger {
+  background: var(--outcome-incompatible-wash);
+  color: var(--outcome-incompatible-text);
+}
+
+.chip--review {
+  background: var(--outcome-review-wash);
+  color: var(--outcome-review-text);
+}
+
+/* ---- P-statement list -------------------------------------- */
+
+.pstatements {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.pstatement {
+  display: flex;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--separator);
+}
+
+.pstatement:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.pstatement__code {
+  flex: none;
+  min-width: 84px;
+  font: var(--text-caption1);
+  font-weight: 700;
+  color: var(--brand-navy);
+  padding-top: 2px;
+}
+
+.pstatement__body {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---- Bottom sheet ------------------------------------------ */
+
+.sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(10, 10, 40, 0.4);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-standard) var(--ease-standard);
+}
+
+.sheet-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 61;
+  max-height: 88dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-base);
+  border-radius: var(--radius-sheet) var(--radius-sheet) 0 0;
+  box-shadow: var(--elevation-sheet);
+  transform: translateY(100%);
+  transition: transform var(--motion-sheet) var(--ease-standard);
+}
+
+.sheet.is-open {
+  transform: translateY(0);
+}
+
+.sheet__grabber {
+  flex: none;
+  width: 36px;
+  height: 5px;
+  margin: var(--space-2) auto 0;
+  border-radius: var(--radius-full);
+  background: var(--separator-strong);
+}
+
+.sheet__header {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--gutter);
+  border-bottom: 1px solid var(--separator);
+}
+
+.sheet__title {
+  font: var(--text-title3);
+}
+
+.sheet__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: var(--space-4) var(--gutter);
+  padding-bottom: calc(var(--space-6) + env(safe-area-inset-bottom));
+}
+
+/* ---- Empty state ------------------------------------------- */
+
+.empty {
+  padding: var(--space-8) var(--gutter);
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.empty__icon {
+  margin: 0 auto var(--space-3);
+  width: 48px;
+  height: 48px;
+  color: var(--text-tertiary);
+}
+
+.empty__title {
+  font: var(--text-headline);
+  color: var(--text-primary);
+}
+
+.empty__body {
+  margin-top: var(--space-1);
+  font: var(--text-subheadline);
+}
+
+/* ---- Loading skeleton -------------------------------------- */
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-sunken);
+  border-radius: var(--radius-sm);
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* ---- Product hero (product page header) ------------------- */
+
+.hero {
+  padding: var(--space-4) var(--gutter) var(--space-5);
+  background: var(--surface-base);
+}
+
+.hero__top {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.hero__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.hero__name {
+  font: var(--text-title2);
+  letter-spacing: -0.01em;
+}
+
+.hero__type {
+  margin-top: 2px;
+  font: var(--text-subheadline);
+  color: var(--text-secondary);
+}
+
+.hero__classes {
+  margin-top: var(--space-1);
+  font: var(--text-subheadline);
+  font-weight: 600;
+  color: var(--brand-navy);
+}
+
+.hero__pictograms {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--separator);
+}
+
+.hero__signal {
+  margin-top: var(--space-3);
+}

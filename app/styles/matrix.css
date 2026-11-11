@@ -1,0 +1,462 @@
+/* ============================================================
+   WareSafe — matrix vocabulary
+   The components that exist only because of the six-pictogram
+   compatibility matrix: symbols, legend, conditions, the
+   pair list and the reference card.
+   ============================================================ */
+
+/* ---- Matrix symbol (check / O / X) --------------------------
+   Every symbol carries a word beside it in the UI. The symbol is
+   never the only carrier of the meaning. */
+
+.symbol {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 5px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--sym, var(--outcome-review));
+  background: var(--sym-wash, var(--outcome-review-wash));
+  color: var(--sym-text, var(--outcome-review-text));
+  font: 700 15px/1 var(--font-latin);
+}
+
+.symbol--ok {
+  --sym: var(--outcome-compatible);
+  --sym-wash: var(--outcome-compatible-wash);
+  --sym-text: var(--outcome-compatible-text);
+}
+
+.symbol--conditional {
+  --sym: var(--outcome-conditional);
+  --sym-wash: var(--outcome-conditional-wash);
+  --sym-text: var(--outcome-conditional-text);
+}
+
+.symbol--no {
+  --sym: var(--outcome-incompatible);
+  --sym-wash: var(--outcome-incompatible-wash);
+  --sym-text: var(--outcome-incompatible-text);
+}
+
+.symbol--none {
+  --sym: var(--outcome-review);
+  --sym-wash: var(--outcome-review-wash);
+  --sym-text: var(--outcome-review-text);
+}
+
+/* ---- Legend ------------------------------------------------ */
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  padding: 0 var(--gutter) var(--space-2);
+}
+
+.legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.legend__symbol {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--outcome);
+  background: var(--outcome-wash);
+  color: var(--outcome-text);
+  font: 700 15px/1 var(--font-latin);
+}
+
+.legend__label {
+  font: var(--text-subheadline);
+  color: var(--text-secondary);
+}
+
+/* ---- Pictogram pair ---------------------------------------- */
+
+.pictogram-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  flex: none;
+}
+
+.pictogram-pair__times {
+  font: var(--text-caption1);
+  color: var(--text-tertiary);
+  padding: 0 2px;
+}
+
+/* ---- Verdict deciding pair --------------------------------- */
+
+.verdict__pair {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.verdict__footnote {
+  margin-top: var(--space-2);
+  font: var(--text-footnote);
+  color: var(--outcome-ink);
+}
+
+/* ---- Conditions -------------------------------------------- */
+
+.conditions {
+  padding: var(--space-4) var(--gutter) 0;
+}
+
+.conditions__title {
+  margin-bottom: var(--space-2);
+  font: var(--text-title3);
+}
+
+.condition-card {
+  margin: 0 0 var(--space-2);
+  padding: 0;
+  overflow: hidden;
+}
+
+.condition-card__heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: var(--hit-target);
+  padding: var(--space-3) var(--card-padding);
+  text-align: left;
+  font: var(--text-headline);
+  color: var(--text-primary);
+}
+
+.condition-card__caret {
+  margin-left: auto;
+  font: var(--text-title3);
+  color: var(--text-tertiary);
+  transition: transform var(--motion-fast) var(--ease-standard);
+}
+
+.condition-card__heading[aria-expanded="true"] .condition-card__caret {
+  transform: rotate(90deg);
+}
+
+.condition-list {
+  margin: 0;
+  padding: 0 var(--card-padding) var(--space-3)
+    calc(var(--card-padding) + 18px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.condition-list__item {
+  font: var(--text-callout);
+  color: var(--text-primary);
+}
+
+/* Authored highlights: the numbers and instructions that matter when
+   the paragraph is long. The markers live in the dataset, so HSE
+   decides what is emphasised. */
+.hl {
+  font-weight: 700;
+  color: var(--text-primary);
+  background: rgba(252, 191, 97, 0.38);
+  border-radius: 3px;
+  padding: 0 2px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* ---- Why-this-result pair list ----------------------------- */
+
+.pairs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+}
+
+.pair-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: var(--space-1) 0;
+  border-top: 1px solid var(--separator);
+}
+
+.pair-row:first-child {
+  border-top: 0;
+}
+
+.pair-row__label {
+  font: var(--text-footnote);
+  font-weight: 600;
+  color: var(--outcome-text);
+}
+
+.pair-row__condition {
+  margin-left: auto;
+  padding: 1px var(--space-2);
+  border-radius: var(--radius-full);
+  background: var(--fill-subtle);
+  font: var(--text-caption2);
+  color: var(--text-secondary);
+}
+
+/* ---- Uncovered pictograms ---------------------------------- */
+
+.uncovered-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.uncovered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  max-width: 96px;
+  text-align: center;
+}
+
+/* ---- Matrix reference card --------------------------------- */
+
+.matrix-ref {
+  padding: 0;
+  overflow: hidden;
+}
+
+.matrix-ref__body {
+  padding: 0 var(--card-padding) var(--card-padding);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.matrix-ref__label {
+  margin-top: var(--space-2);
+}
+
+.matrix-ref__refs {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* ---- Notes and footers ------------------------------------- */
+
+.card--note {
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--card-padding);
+  background: transparent;
+  border: 1px dashed var(--separator-strong);
+}
+
+.notice--none {
+  background: var(--outcome-review-wash);
+  color: var(--outcome-review-text);
+  border-left-color: var(--outcome-review);
+}
+
+.data-footer {
+  padding: var(--space-5) var(--gutter) var(--space-3);
+  text-align: center;
+}
+
+.hero__code {
+  margin-top: 2px;
+  font: var(--text-caption1);
+  color: var(--text-tertiary);
+}
+
+.hero__pictogram {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  max-width: 84px;
+  text-align: center;
+}
+
+/* The deciding pair inside a storage-table row. */
+.storage-table__reason .pictogram-pair {
+  margin-top: 2px;
+}
+
+.storage-table__reason .pictogram {
+  --pictogram-size: 26px;
+}
+
+/* ============================================================
+   Store buckets (filled, colour-coded)
+   The colour is a second signal; the symbol and the words carry
+   the meaning on their own.
+   ============================================================ */
+
+.bucket {
+  margin-bottom: var(--space-4);
+}
+
+.bucket__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 var(--gutter);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  background: var(--bucket-head);
+  color: var(--bucket-ink);
+  font: var(--text-title3);
+}
+
+/* Solid fills, chosen so white or near-black text clears 4.5:1 on
+   every band. The colour is the poka-yoke; the symbol and the words
+   still carry the meaning on their own. */
+
+.bucket--no {
+  --bucket-fill: var(--outcome-incompatible-fill);
+  --bucket-head: var(--outcome-incompatible-head);
+  --bucket-ink: var(--outcome-incompatible-ink);
+  --bucket-symbol: var(--outcome-incompatible-text);
+}
+
+.bucket--conditional {
+  --bucket-fill: var(--outcome-conditional-fill);
+  --bucket-head: var(--outcome-conditional-head);
+  --bucket-ink: var(--outcome-conditional-ink);
+  --bucket-symbol: var(--outcome-conditional-text);
+}
+
+.bucket--ok {
+  --bucket-fill: var(--outcome-compatible-fill);
+  --bucket-head: var(--outcome-compatible-head);
+  --bucket-ink: var(--outcome-compatible-ink);
+  --bucket-symbol: var(--outcome-compatible-text);
+}
+
+.bucket--none {
+  --bucket-fill: var(--outcome-review-fill);
+  --bucket-head: var(--outcome-review-head);
+  --bucket-ink: var(--outcome-review-ink);
+  --bucket-symbol: var(--outcome-review-text);
+}
+
+.bucket__symbol {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  color: var(--bucket-symbol);
+  font: 700 15px/1 var(--font-latin);
+}
+
+.bucket__label {
+  flex: 1;
+  min-width: 0;
+}
+
+.bucket__count {
+  flex: none;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 6px;
+  border-radius: var(--radius-full);
+  background: #ffffff;
+  color: var(--bucket-symbol);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: var(--text-caption1);
+  font-weight: 700;
+}
+
+.bucket__list {
+  margin: 0 var(--gutter);
+  border: 1px solid var(--separator);
+  border-top: 0;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  overflow: hidden;
+}
+
+.bucket__list .storage-table__row {
+  background: var(--bucket-fill);
+  color: var(--bucket-ink);
+  gap: var(--space-2);
+  padding: var(--space-2) var(--card-padding);
+}
+
+.bucket__list .storage-table__row + .storage-table__row {
+  border-top: 1px solid rgba(0, 0, 0, 0.14);
+}
+
+.bucket__list .storage-table__row:active {
+  filter: brightness(0.94);
+}
+
+.bucket__list .storage-table__label {
+  color: var(--bucket-ink);
+}
+
+.bucket__list .storage-table__pics {
+  gap: 3px;
+  margin-top: 2px;
+}
+
+.bucket__list .storage-table__pics .pictogram {
+  --pictogram-size: 24px;
+}
+
+.storage-table__symbol {
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+}
+
+.storage-table__chevron {
+  flex: none;
+  margin-left: auto;
+  font: var(--text-title3);
+  color: var(--bucket-ink);
+  opacity: 0.65;
+}
+
+.bucket__empty {
+  padding: var(--space-3);
+  background: var(--bucket-fill);
+  color: var(--bucket-ink);
+  text-align: center;
+  font: var(--text-subheadline);
+  opacity: 0.85;
+}
+
+/* ---- Picker hint ------------------------------------------- */
+
+.picker__hint {
+  margin: calc(var(--space-2) * -1) var(--gutter) var(--space-3);
+  font: var(--text-caption1);
+  color: var(--text-secondary);
+}

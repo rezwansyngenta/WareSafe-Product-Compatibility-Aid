@@ -1,0 +1,61 @@
+{
+  "name": "WareSafe — Product Compatibility Aid",
+  "short_name": "WareSafe",
+  "description": "Check whether two warehouse products can be stored together, using the GHS pictogram compatibility matrix. Includes SDS details and product-specific first aid.",
+  "id": "./",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f3f3f8",
+  "theme_color": "#010066",
+  "lang": "bn",
+  "dir": "ltr",
+  "categories": ["business", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "./assets/brand/logo-syngenta-navy.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./assets/brand/logo-syngenta-onbrand.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Compare two products",
+      "short_name": "Compare",
+      "url": "./index.html#/compare",
+      "icons": [
+        {
+          "src": "./assets/brand/logo-syngenta-navy.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Emergency response",
+      "short_name": "Response",
+      "url": "./index.html#/response",
+      "icons": [
+        {
+          "src": "./assets/brand/logo-syngenta-navy.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ]
+}

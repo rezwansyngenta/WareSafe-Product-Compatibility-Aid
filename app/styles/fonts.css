@@ -1,0 +1,25 @@
+/* ============================================================
+   WareSafe — web fonts
+   Montserrat is the Latin face and Noto Sans Bengali carries the
+   Bangla glyphs. Both are self-hosted so the app works with no
+   signal, renders Bangla the same on every phone, and never calls
+   a third party from the warehouse floor.
+   ============================================================ */
+
+@font-face {
+  font-family: "Montserrat Variable";
+  src: url("../assets/fonts/Montserrat-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  /* swap: the screen is readable in the system face for the few
+     milliseconds it takes to decode, instead of showing nothing. */
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Sans Bengali";
+  src: url("../assets/fonts/NotoSansBengali-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}

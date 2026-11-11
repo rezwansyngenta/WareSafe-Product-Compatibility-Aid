@@ -1,0 +1,725 @@
+/* ============================================================
+   WareSafe — screen layouts
+   Only the arrangements that are unique to one screen live
+   here. Everything reusable is in components.css.
+   ============================================================ */
+
+/* ---- Screen container -------------------------------------- */
+
+.screen {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding-bottom: var(--space-8);
+  /* A new screen rises into place rather than snapping in, so the
+     change between tabs feels continuous. Reduced motion is honoured
+     globally in base.css. */
+  animation: screen-enter var(--motion-standard) var(--ease-standard);
+}
+
+@keyframes screen-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* A screen is either pushed from a tab (no back button) or
+   pushed from another screen (back button in the screen bar).
+   The bar itself is styled in components.css, with the rest of the
+   brand chrome. */
+
+/* ---- Store screen ----------------------------------------- */
+
+.store__hero {
+  padding: var(--space-2) var(--gutter) var(--space-5);
+}
+
+.store__intro {
+  font: var(--text-subheadline);
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+}
+
+.store__sections {
+  padding-top: var(--space-2);
+}
+
+/* ---- Recent products --------------------------------------- */
+
+.recent {
+  padding: 0 0 var(--space-3);
+}
+
+.recent__title {
+  padding: 0 var(--gutter) var(--space-2);
+  font: var(--text-caption2);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-tab);
+  color: var(--text-secondary);
+}
+
+.recent__row {
+  display: flex;
+  gap: var(--space-2);
+  padding: 0 var(--gutter);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.recent__chip {
+  flex: none;
+  max-width: 220px;
+  min-height: 40px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--surface-raised);
+  box-shadow: var(--elevation-1);
+  text-align: left;
+}
+
+.recent__name {
+  font: var(--text-subheadline);
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.store__block {
+  padding: var(--space-4) 0 0;
+}
+
+.store__block-title {
+  padding: 0 var(--gutter) var(--space-2);
+  font: var(--text-title3);
+}
+
+/* Storage-outcome table inside the Store screen */
+.storage-table {
+  display: flex;
+  flex-direction: column;
+}
+
+.storage-table__row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--card-padding);
+  text-align: left;
+  background: var(--surface-raised);
+}
+
+.storage-table__row + .storage-table__row {
+  border-top: 1px solid var(--separator);
+}
+
+.storage-table__marker {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  color: var(--outcome);
+}
+
+.storage-table__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.storage-table__label {
+  font: var(--text-headline);
+  color: var(--text-primary);
+}
+
+.storage-table__pics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: var(--space-1);
+}
+
+.storage-table__detail {
+  margin-top: 2px;
+  font: var(--text-subheadline);
+  color: var(--text-secondary);
+}
+
+.storage-table__condition {
+  margin-top: var(--space-1);
+  font: var(--text-footnote);
+  color: var(--text-secondary);
+}
+
+/* The restriction that applies (e.g. "Separation required — ≥ 3 m"). */
+.storage-table__restriction {
+  margin-top: 2px;
+  font: var(--text-subheadline);
+  font-weight: 600;
+  color: var(--outcome-text);
+}
+
+/* The class pair that decided this product's bucket. */
+.storage-table__reason {
+  margin-top: 2px;
+  font: var(--text-caption1);
+  color: var(--text-tertiary);
+}
+
+/* ---- Segregation bucket headings --------------------------- */
+
+.seg-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  color: inherit;
+}
+
+.seg-count {
+  flex: none;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-full);
+  background: var(--fill-subtle);
+  color: var(--text-secondary);
+  font: var(--text-caption1);
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seg-caret {
+  margin-left: auto;
+  font: var(--text-title3);
+  color: var(--text-tertiary);
+  transition: transform var(--motion-fast) var(--ease-standard);
+}
+
+.seg-toggle[aria-expanded="true"] .seg-caret {
+  transform: rotate(90deg);
+}
+
+/* ---- Compare screen --------------------------------------- */
+
+.compare__slots {
+  /* The swap button is absolutely positioned inside this grid, so the
+     grid has to be its containing block. Without this the button is
+     placed against the viewport and floats over the page content. */
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  padding: 0 var(--gutter) var(--space-4);
+}
+
+.slot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 132px;
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+  box-shadow: var(--elevation-1);
+  text-align: left;
+  overflow: hidden;
+}
+
+.slot__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-3);
+  padding-top: calc(var(--space-3) + 8px);
+  text-align: left;
+}
+
+.slot__pictograms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: auto;
+}
+
+.slot__pictograms .pictogram {
+  --pictogram-size: 28px;
+}
+
+.slot__clear {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-full);
+  background: var(--fill-subtle);
+  color: var(--text-secondary);
+}
+
+.slot--empty {
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3);
+  border: 2px dashed var(--separator-strong);
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-tertiary);
+}
+
+.slot__label {
+  font: var(--text-caption2);
+  letter-spacing: var(--tracking-tab);
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.slot__name {
+  font: var(--text-headline);
+  color: var(--text-primary);
+}
+
+.slot__swap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-full);
+  background: var(--surface-raised);
+  box-shadow: var(--elevation-2);
+  color: var(--brand-navy);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The class-pair chips that produced the outcome */
+.classpairs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: 0 var(--gutter) var(--space-4);
+}
+
+.classpair {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  box-shadow: var(--elevation-1);
+}
+
+.classpair__glyphs {
+  display: flex;
+  gap: 2px;
+}
+
+.classpair__outcome {
+  font: var(--text-caption1);
+  font-weight: 700;
+  color: var(--outcome-text);
+}
+
+/* ---- Response screen --------------------------------------- */
+
+.response__routes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  padding: 0 var(--gutter) var(--space-4);
+}
+
+.route {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: 76px;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  box-shadow: var(--elevation-1);
+  color: var(--text-primary);
+}
+
+.route__icon {
+  width: 26px;
+  height: 26px;
+}
+
+.route__label {
+  font: var(--text-caption1);
+  font-weight: 600;
+  text-align: center;
+}
+
+.route[aria-pressed="true"] {
+  background: var(--brand-navy);
+  color: var(--text-on-navy);
+}
+
+.route--wide {
+  grid-column: 1 / -1;
+}
+
+/* The action card: what to do, in order, first thing */
+.action {
+  margin: 0 var(--gutter);
+  padding: var(--card-padding);
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+  box-shadow: var(--elevation-1);
+  border-left: 6px solid var(--emergency);
+}
+
+.action__step {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+}
+
+.action__step + .action__step {
+  border-top: 1px solid var(--separator);
+}
+
+.action__index {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-full);
+  background: var(--emergency);
+  color: #fff;
+  font: var(--text-caption1);
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.action__heading {
+  margin-bottom: var(--space-2);
+  font: var(--text-headline);
+}
+
+/* The informational sections below the action use the same numbered
+   step layout but with a neutral index instead of the emergency red. */
+.steps {
+  display: flex;
+  flex-direction: column;
+}
+
+.step {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+}
+
+.step + .step {
+  border-top: 1px solid var(--separator);
+}
+
+.step__index {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-full);
+  background: var(--fill-subtle);
+  color: var(--text-secondary);
+  font: var(--text-caption1);
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step__body {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---- Bulleted list (hazard summary) ------------------------ */
+
+.bullets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.bullet {
+  display: flex;
+  gap: var(--space-3);
+  font: var(--text-body);
+}
+
+.bullet::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  margin-top: 8px;
+  border-radius: var(--radius-full);
+  background: var(--text-tertiary);
+}
+
+/* Escalation: call the doctor / poison centre */
+.escalate {
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--emergency-soft);
+  color: var(--emergency-text);
+  text-align: center;
+}
+
+.escalate__label {
+  font: var(--text-subheadline);
+}
+
+.escalate__number {
+  display: block;
+  margin-top: var(--space-1);
+  font: var(--text-title1);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+
+/* ---- Emergency directory ----------------------------------- */
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--card-padding);
+  background: var(--surface-raised);
+}
+
+.contact + .contact {
+  border-top: 1px solid var(--separator);
+}
+
+.contact__name {
+  font: var(--text-headline);
+  color: var(--text-primary);
+}
+
+.contact__dials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Every number is a thumb-sized button that dials on one tap. */
+.dial {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--hit-target);
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--emergency-soft);
+  color: var(--emergency-text);
+  font: var(--text-headline);
+  font-variant-numeric: tabular-nums;
+}
+
+.dial__icon {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+.dial--plain {
+  background: var(--fill-subtle);
+  color: var(--text-secondary);
+}
+
+/* ---- Review-required notice -------------------------------- */
+
+.notice {
+  margin: 0 var(--gutter) var(--space-4);
+  padding: var(--card-padding);
+  border-radius: var(--radius-lg);
+  background: var(--outcome-review-wash);
+  color: var(--outcome-review-text);
+  border-left: 6px solid var(--outcome-review);
+}
+
+.notice__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font: var(--text-headline);
+}
+
+.notice__body {
+  margin-top: var(--space-2);
+  font: var(--text-callout);
+}
+
+/* ---- Product picker (bottom sheet contents) ---------------- */
+
+/* The picker is used in two places: as the contents of the bottom
+   sheet, and inline on the Store landing screen. It cancels the
+   sheet's own gutter here so both places lay out identically. */
+.picker {
+  margin: 0 calc(var(--gutter) * -1);
+}
+
+/* On the Store landing the picker is not inside a sheet, so it is
+   wrapped in .picker-inline to restore the side gutter and draw the
+   list as an inset card instead of a full-bleed strip. */
+.picker-inline .picker {
+  margin: 0;
+}
+
+.picker-inline .picker__list {
+  margin: 0 var(--gutter);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--separator);
+  overflow: hidden;
+}
+
+.picker__filters {
+  display: flex;
+  gap: var(--space-2);
+  padding: 0 var(--gutter) var(--space-3);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* A row of the nine GHS diamonds used as a pictogram filter. */
+.picker__pictograms {
+  display: flex;
+  gap: var(--space-2);
+  padding: 0 var(--gutter) var(--space-3);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.picto-filter {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  background: var(--surface-sunken);
+}
+
+.picto-filter .pictogram {
+  --pictogram-size: 30px;
+}
+
+.picto-filter[aria-pressed="true"] {
+  border-color: var(--brand-navy);
+  background: var(--surface-raised);
+}
+
+.picto-clear {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+  color: var(--text-secondary);
+  font: var(--text-caption1);
+  font-weight: 600;
+}
+
+.picker__filter {
+  flex: none;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--fill-subtle);
+  font: var(--text-subheadline);
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.picker__filter[aria-pressed="true"] {
+  background: var(--brand-navy);
+  color: var(--text-on-navy);
+}
+
+.picker__list {
+  background: var(--surface-raised);
+}
+
+/* ---- Pair screen ------------------------------------------- */
+
+.pair-header {
+  padding: var(--space-4) var(--gutter);
+  background: var(--surface-base);
+}
+
+.pair-header__caption {
+  margin-bottom: var(--space-2);
+  font: var(--text-caption2);
+  letter-spacing: var(--tracking-tab);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.pair-header__row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.pair-header__product {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.pair-header__name {
+  font: var(--text-headline);
+  color: var(--text-primary);
+}
+
+.pair-header__pics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.pair-header__pics .pictogram {
+  --pictogram-size: 28px;
+}
+
+.pair-header__plus {
+  flex: none;
+  padding-top: 2px;
+  font: var(--text-title3);
+  color: var(--text-tertiary);
+}

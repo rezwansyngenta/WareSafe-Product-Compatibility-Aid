@@ -1,0 +1,17 @@
+# Dependencies and tooling
+node_modules/
+__pycache__/
+*.pyc
+
+# Installed AI design skill (development tool; reinstall with uipro)
+.opencode/skills/
+
+# Generated / local artifacts
+build/
+*.zip
+*.log
+
+# OS noise
+.DS_Store
+Thumbs.db
+desktop.ini

@@ -1,0 +1,11 @@
+{
+  "name": "waresafe-product-compatibility-aid",
+  "version": "1.0.0",
+  "private": true,
+  "description": "WareSafe — offline-first warehouse product compatibility aid built on the GHS pictogram matrix.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test \"tests/**/*.test.js\"",
+    "build:snapshot": "python tools/build_snapshot.py"
+  }
+}
